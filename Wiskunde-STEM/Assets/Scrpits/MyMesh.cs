@@ -7,6 +7,8 @@ public class MyMesh : MonoBehaviour
     [SerializeField] MeshFilter meshFilter;
     Mesh mesh;
     
+    Matrix2x2 matrix2x2 = new Matrix2x2();
+    
     Vector3[] vertices;
     
     int[] triangles;
@@ -38,6 +40,16 @@ public class MyMesh : MonoBehaviour
         };
         
         mesh.RecalculateNormals();
+        
+        matrix2x2.matrix[0,0] = 1;
+        matrix2x2.matrix[0,1] = 1;
+        matrix2x2.matrix[1,1] = 1;
+        
+        for (int i = 0; i < vertices.Length; i++)
+        {
+            vertices[i] = matrix2x2.MultiplyWithVector(vertices[i]);
+        }
+        mesh.vertices = vertices;
 
     }
 
